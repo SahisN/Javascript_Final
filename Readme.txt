@@ -1,5 +1,5 @@
 Javascript Group project
-- Sahis
+- Sahis Neupane
 - Luis Badillo
 - Paulo
 - Williams
