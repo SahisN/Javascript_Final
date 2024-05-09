@@ -1,6 +1,6 @@
 Javascript Group project
 - Sahis
-- Luis
+- Luis Badillo
 - Paulo
 - Williams
 - Leo
