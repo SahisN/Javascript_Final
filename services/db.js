@@ -66,14 +66,14 @@ export default class MongoDB {
     }
 
     // finds element in collection by a valid id, otherwise returns the whole collection
-    async find(collectionName, id) {
+    async find(collectionName, _id) {
         try {
             const collection = this.db.collection(collectionName);
             
             // if id is valid then return element 
-            if (id) 
+            if (_id) 
             {
-                const cursor = await collection.find({id}).toArray();
+                const cursor = await collection.find({_id}).toArray();
                 return cursor
             }
             
