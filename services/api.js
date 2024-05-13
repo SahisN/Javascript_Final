@@ -9,7 +9,7 @@ export const keyword_search = async (keyword) => {
         const url = `${base_url}/character?name=${keyword}`;
         const getResponse = await axios.get(url);
         
-        //console.log(getResponse.data);
+
         return getResponse.data;
        
     }
