@@ -46,7 +46,6 @@ router.get('/:id/details/', async (req,res) => {
 
         if(cache === 'true') {
             const cacheResult = await mongo.find('search_cache', characterId);
-            console.log(cacheResult);
 
             if(!cacheResult.length){
                 searchChar = await api.details(characterId);
@@ -57,12 +56,16 @@ router.get('/:id/details/', async (req,res) => {
             }
 
         } else {
-            searchChar = await api.details(characterId);
-            result = {id: characterId, name: searchChar.data.name, films: searchChar.data.films, videogames: searchChar.data.videoGames}
-            await mongo.create('search_cache', result);
+            const checkCollection = await mongo.find('search_cache', characterId);
+            if (checkCollection.length) {
+                result = checkCollection;
+            } else {
+                const searchChar = await api.details(characterId);
+                result = { id: characterId, name: searchChar.data.name, films: searchChar.data.films, videogames: searchChar.data.videoGames };
+                await mongo.create('search_cache', result);
+            }
         }
-
-        
+   
         res.json(result);
     } catch (err) {
         res.status(500).json({ err });
