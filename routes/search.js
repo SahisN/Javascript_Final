@@ -12,18 +12,15 @@ router.get('/character', async (req, res) => {
         const results = await api.keyword_search(query.name);
 
         const document = {
-            searchTerm: query.name,
+            id: query.name,
             searchCount: results.info.count,
             lastSearched: new Date()
         };
 
-
-        const cursor = await mongo.find('search_history', document.searchTerm);
- 
+        const cursor = await mongo.find('search_history', document.id);
+        
         if (cursor.length) {
-            await mongo.update('search_history', id, {
-                lastSearched: new Date()
-            });
+            await mongo.update('search_history', document.id, new Date());
         } else {
             await mongo.create('search_history', document);
         }
