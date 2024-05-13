@@ -6,23 +6,22 @@ const router = express.Router();
 const mongo = new MongoDB();
 await mongo.connect();
 
-router.get('/search', async (req, res) => {
+router.get('/character', async (req, res) => {
     try {
         const { query } = req;
-        const results = await searchByKeyword(query.searchTerm);
-        const filter = { searchTerm: query.searchTerm };
+        const results = await api.keyword_search(query.name);
 
         const document = {
-            searchTerm: query.searchTerm,
-            searchCount: results.length,
+            searchTerm: query.name,
+            searchCount: results.info.count,
             lastSearched: new Date()
         };
 
-        const cursor = await mongo.find('search_history', filter);
-        const arr = await cursor.toArray();
 
-        if (arr.length) {
-            await mongo.update('search_history', filter, {
+        const cursor = await mongo.find('search_history', document.searchTerm);
+ 
+        if (cursor.length) {
+            await mongo.update('search_history', id, {
                 lastSearched: new Date()
             });
         } else {

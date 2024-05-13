@@ -73,15 +73,21 @@ export default class MongoDB {
             // if id is valid then return element 
             if (id) 
             {
-                const cursor = await collection.find({id}).toArray();
+                const cursor = await collection.find({
+                    id : id
+
+                }).toArray();
                 return cursor;
             }
             
             // if id is not valid, return empty cursor
             else 
             {
+                const cursor = await collection.find({}).toArray();
                 return cursor;
             }
+
+            
         }
 
         catch(error) {
