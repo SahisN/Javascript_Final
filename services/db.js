@@ -34,7 +34,7 @@ export default class MongoDB {
         }
 
         catch(error) {
-            console.log('Error connecting: ', error);
+            console.error('Error connecting: ', error);
         }
     }
 
@@ -55,7 +55,6 @@ export default class MongoDB {
         try {
             const collection = this.db.collection(collectionName);
             const result = await collection.insertOne(data);
-            console.log('Item inserted: ', result.insertedId);
             
             return result;
         }
@@ -66,14 +65,17 @@ export default class MongoDB {
     }
 
     // finds element in collection by a valid id, otherwise returns the whole collection
-    async find(collectionName, _id) {
+    async find(collectionName, id) {
         try {
             const collection = this.db.collection(collectionName);
             
             // if id is valid then return element 
-            if (_id) 
+            if (id) 
             {
-                const cursor = await collection.find({_id}).toArray();
+                const cursor = await collection.find({
+                    id : id
+
+                }).toArray();
                 return cursor
             }
             
