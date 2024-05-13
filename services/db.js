@@ -55,7 +55,6 @@ export default class MongoDB {
         try {
             const collection = this.db.collection(collectionName);
             const result = await collection.insertOne(data);
-            console.log('Item inserted: ', result.insertedId);
             
             return result;
         }
