@@ -91,4 +91,30 @@ export default class MongoDB {
             console.error('Error finding data:', error)
         }
     }
+
+    // update the time of a element in collection
+    async update(collectionName, id, newDate) {
+        try {
+            const collection = this.db.collection(collectionName);
+
+            // only updates element if the id is valid (not empty id)
+            if (id) {
+                const filter = {id: id}
+                // only changes lastSearched date
+                const updateDoc = {
+                    $set: {
+                        lastSearched: newDate
+                    }
+                }
+                const result = await collection.updateOne(filter, updateDoc)
+                
+                console.log('Updated \n', result)
+            }
+
+        }
+
+        catch(error) {
+            console.error('Error updating: ', error)
+        }
+    }
 }
