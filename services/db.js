@@ -34,7 +34,7 @@ export default class MongoDB {
         }
 
         catch(error) {
-            console.log('Error connecting: ', error);
+            console.error('Error connecting: ', error);
         }
     }
 
